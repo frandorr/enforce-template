@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# ANSI Colors
+RED='\033[1;31m'
+RESET='\033[0m'
+
+# Usage handling
+if [[ "${1}" =~ (usage|help|--help) ]] || [[ "${2}" =~ (usage|help|--help) ]]; then
+  "${TODO_FULL_SH}" projectview usage
+  exit
+elif [[ "${1}" = "$(basename "$0")" ]]; then
+  shift
+fi
+
+# Run todo.sh and colorize project headers
+"${TODO_FULL_SH}" projectview "$@" | awk -v RED="$RED" -v RESET="$RESET" '
+  # Match lines like "---  hornero  ---"
+  /^---[[:space:]]+.*[[:space:]]+---$/ {
+    # Extract project name by removing the leading/trailing ---
+    gsub(/^---[[:space:]]+/, "")
+    gsub(/[[:space:]]+---$/, "")
+    print "---  " RED $0 RESET "  ---"
+    next
+  }
+  { print }
+'

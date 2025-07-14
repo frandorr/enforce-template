@@ -1,12 +1,30 @@
 # Python Polylith Template with uv
 
-A template repository for Python projects using the Polylith architecture with uv package manager.
+A template repository for Python projects using the Polylith architecture with uv package manager that enforces practices and conventions.
+
+# Index
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+- [Dependencies](#dependencies)
+  - [Development Dependencies](#development-dependencies)
+  - [Recommended Additional Tools](#recommended-additional-tools)
+- [Pre-commit Hooks](#pre-commit-hooks)
+  - [Installing Pre-commit](#installing-pre-commit)
+- [Project Structure](#project-structure)
+- [Development Workflow](#development-workflow)
+- [Commit Conventions](#commit-conventions)
+- [License](#license)
 
 ## Features
 
 - Polylith architecture for modular, maintainable Python code
 - uv package manager for fast, reliable dependency management
 - Pre-configured development tools
+- Pre-commit hooks for code quality checks, `just` tasks for common operations
+- todo.txt for task management and Obsidian for knowledge management
 - Python 3.13+ support
 
 ## Getting Started
@@ -14,6 +32,9 @@ A template repository for Python projects using the Polylith architecture with u
 ### Prerequisites
 
 - [uv](https://github.com/astral-sh/uv) package manager
+- [just](https://github.com/casey/just) for task automation
+- [todo.txt](https://github.com/todotxt/todo.txt-cli) (install with `just install-todotxt`)
+- [Obsidian](https://obsidian.md/) for knowledge management
 
 ### Setup
 
@@ -29,11 +50,14 @@ A template repository for Python projects using the Polylith architecture with u
 
 ## Dependencies
 
+### Development Dependencies
+
 This template includes the following development dependencies:
 
 - **pre-commit**: Manages Git hooks for code quality checks
 - **polylith-cli**: Command-line interface for Polylith architecture
 - **pytest**: Testing framework
+- **basedpyright**: Type checking tool
 
 ### Recommended Additional Tools
 
@@ -75,10 +99,25 @@ The Polylith architecture organizes code into:
 
 ## Development Workflow
 
-1. Create components and bases using Polylith CLI
-2. Implement your functionality
-3. Create projects to package your code
-4. Run tests with `uv run pytest`
+1. Add tasks with `t add <description> +<project> @<component>`. 
+  i.e. `t add "Implement login feature" +auth_server +auth`
+2. Create components and bases using Polylith CLI
+3. Implement your functionality
+4. Create projects to package your code
+5. Run tests with `uv run pytest`
+6. Commit your changes with `git commit -m "feat(auth): implement login feature #1"`
+  a. To close a task, add `[do #1]` to your commit message
+  b. To close multiple tasks, add `[do #1 #2 #3]` to your commit message. 
+  i.e. `git commit -m "feat(auth): implement login feature [do #1 #2] #3"` will close tasks 1 and 2, and leave task 3 open.
+
+## Commit Conventions
+
+This project uses the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summarys) format for commit messages.
+
+To keep a clean history easy to review:
+
+- rebase main into your branch before merging
+- merge commit when merging on the main branch
 
 ## License
 

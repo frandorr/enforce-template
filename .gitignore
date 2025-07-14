@@ -190,3 +190,5 @@ Cargo.lock
 docs/.obsidian/workspace.json
 docs/.obsidian/plugins/
 docs/.obsidian/graph.json
+
+*.bak

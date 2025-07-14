@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# ANSI Colors
+BLUE='\033[1;34m'
+RESET='\033[0m'
+
+# Usage for todo.sh help or remove action
+if [[ "${1}" =~ (usage|help|--help) ]] || [[ "${2}" =~ (usage|help|--help) ]]; then
+  "${TODO_FULL_SH}" contextview usage
+  exit
+elif [[ "${1}" = "$(basename "$0")" ]]; then
+  shift
+fi
+
+# Run contextview and colorize context headers
+"${TODO_FULL_SH}" contextview "$@" | awk -v BLUE="$BLUE" -v RESET="$RESET" '
+  # Match lines like "---  casafacu  ---"
+  /^---[[:space:]]+.*[[:space:]]+---$/ {
+    gsub(/^---[[:space:]]+/, "")
+    gsub(/[[:space:]]+---$/, "")
+    print "---  " BLUE $0 RESET "  ---"
+    next
+  }
+  { print }
+'

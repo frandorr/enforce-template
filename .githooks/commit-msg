@@ -1,0 +1,76 @@
+#!/bin/bash
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+CONFIG_FILE="docs/todo/config"
+TODO_FILE="docs/todo/todo.txt"
+DONE_FILE="docs/todo/done.txt"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RESET='\033[0m'
+# ANSI colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[1;34m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+# Enforce conventional commit format
+TYPES="feat|fix|chore|docs|style|refactor|perf|test"
+errors=0
+if ! echo "$COMMIT_MSG" | grep -Eq "^($TYPES)(\([a-z0-9-]+\))?: .+"; then
+  echo
+  echo -e "${RED}${BOLD}✖ Invalid Commit Message Format${RESET}"
+  echo -e "   Please use: ${GREEN}<type>(<scope>): <subject> <task>${RESET}"
+  echo -e "   Example   : ${GREEN}feat(api): add new endpoint for users #123${RESET}"
+  echo -e "   Available Types     : ${GREEN}feat|fix|chore|docs|style|refactor|perf|test${RESET}"
+  echo
+  # sum 1 to errors
+  errors=$((errors + 1))
+fi
+
+# Extract referenced tasks
+REF_TASKS=$(grep -oE "#[0-9]+" <<<"$COMMIT_MSG" | sort -u)
+REF_TASKS_ARRAY=($REF_TASKS)
+
+if [[ ${#REF_TASKS_ARRAY[@]} -lt 1 ]]; then
+  echo
+  echo -e "${RED}${BOLD}✖ Missing Task Reference${RESET}"
+  echo -e "   Every commit must reference at least one task ID (e.g. ${GREEN}#123${RESET})"
+  echo
+  echo -e "${BLUE}${BOLD}Suggested tasks from todo.txt:${RESET}"
+  echo
+  todo.sh -d "$CONFIG_FILE" ls
+  echo
+  errors=$((errors + 1))
+  # exit 1
+fi
+# check if errors
+if [[ "$errors" -gt 0 ]]; then
+  echo
+  echo -e "${RED}${BOLD}✖ Please fix the above errors and try again. To skip: --no-verify${RESET}"
+  exit 1
+fi
+
+# Extract tasks explicitly within [do #n #n2] or [done #n #n2]
+DO_BLOCKS=$(grep -oP '\[(do|done)\s+#[0-9]+((\s+#[0-9]+)*)\]' <<<"$COMMIT_MSG")
+
+DO_TASKS=()
+for block in $DO_BLOCKS; do
+  # Remove brackets and split by whitespace
+  TASKS=$(sed -E 's/^\[(do|done)\s+//; s/\]$//' <<<"$block")
+  for task in $TASKS; do
+    # remove do and []
+    TASK_NUM=$(sed 's/do//; s/\[//; s/\]//; s/#//; s/ //g' <<<"$task")
+    DO_TASKS+=("$TASK_NUM")
+  done
+done
+
+if [[ ${#DO_TASKS[@]} -gt 0 ]]; then
+  echo -e "${GREEN}${BOLD}✔ Closing tasks: ${DO_TASKS[*]}${RESET}"
+  todo.sh -d "$CONFIG_FILE" do "${DO_TASKS[@]}" -a
+fi
+
+exit 1
