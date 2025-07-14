@@ -58,15 +58,15 @@ if ! echo "$COMMIT_MSG" | grep -Eq "^($TYPES)(\([a-z0-9-]+\))?: .+"; then
 fi
 echo "done."
 
+# Check if tasks are referenced
+echo
+echo -e "${GREEN}${BOLD} === RUNNING TASK REFERENCE CHECK... === ${RESET}"
 # Extract referenced tasks
 REF_TASKS=$(grep -oE "#[0-9]+" <<<"$COMMIT_MSG" | sort -u)
 REF_TASKS_ARRAY=($REF_TASKS)
 
 # check that referenced tasks exists in todo.txt by running t ls
 # example: 1 2025-07-14 prueba, so first field is the task number
-echo "--- todo list output ---"
-todo.sh -d "$CONFIG_FILE" ls
-echo "------------------------"
 for task in "${REF_TASKS_ARRAY[@]}"; do
   task=$(echo "$task" | xargs)
   task=${task//#/}
@@ -79,10 +79,6 @@ for task in "${REF_TASKS_ARRAY[@]}"; do
     echo "✔ Task $task found!"
   fi
 done
-
-# Check if tasks are referenced
-echo
-echo -e "${GREEN}${BOLD} === RUNNING TASK REFERENCE CHECK... === ${RESET}"
 
 if [[ ${#REF_TASKS_ARRAY[@]} -lt 1 ]]; then
   echo -e "${RED}${BOLD}✖ Missing Task Reference${RESET}"
