@@ -114,4 +114,4 @@ if [[ ${#DO_TASKS[@]} -gt 0 ]]; then
   todo.sh -d "$CONFIG_FILE" do "${DO_TASKS[@]}" -a
 fi
 
-exit 1
+exit 0
