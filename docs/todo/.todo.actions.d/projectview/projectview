@@ -6,7 +6,7 @@
 #
 #         USAGE: todo.sh projectview [TERM]
 #
-#        AUTHOR: Paul Mansfield (paul.mansfield@mansteck.co.uk), 
+#        AUTHOR: Paul Mansfield (paul.mansfield@mansteck.co.uk),
 #     COPYRIGHT: 2009-2021 Paul Mansfield
 #       LICENSE: GPL, http://www.gnu.org/copyleft/gpl.html
 #===============================================================================
@@ -115,7 +115,7 @@ echo "=====  Projects  ====="
   fi
 
 # For each project show header and the list of todo items
-for project in $PROJECTS ; do 
+for project in $PROJECTS ; do
 	# Use core _list function, does numbering and colouring for us
 	PROJECT_LIST=$(_list "$TODO_FILE" "+${project}\b" "${TERMS}" \
 		| sed "s/\ \x1b\[[0-9;]*m+[a-zA-Z0-9._:\-]*\b//g")
@@ -130,7 +130,7 @@ for project in $PROJECTS ; do
 done
 
 # Show todo items not associated to a project and we haven't limited to certain
-# projects 
+# projects
 if [[ "${PROJECT_LIMIT}" -ne 1 ]]; then
 	PROJECT_LIST=$(_list "${TODO_FILE}" "-+[a-zA-Z0-9._:\-]*\b" "${TERMS}" )
 	if [[ -n "${PROJECT_LIST}" ]]; then

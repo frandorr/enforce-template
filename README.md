@@ -8,6 +8,7 @@ A template repository for Python projects using the Polylith architecture with u
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
+  - [Obsidian setup](#obsidian-setup)
 - [Dependencies](#dependencies)
   - [Development Dependencies](#development-dependencies)
   - [Recommended Additional Tools](#recommended-additional-tools)
@@ -36,6 +37,7 @@ A template repository for Python projects using the Polylith architecture with u
 - [todo.txt](https://github.com/todotxt/todo.txt-cli) (install with `just install-todotxt`)
 - [Obsidian](https://obsidian.md/) for knowledge management
 
+
 ### Setup
 
 1. Use this template to create a new repository
@@ -47,6 +49,14 @@ A template repository for Python projects using the Polylith architecture with u
 3. Update project details in `pyproject.toml`
 4. Run `uv sync` to install dependencies
 5. Run `uv run poly --help` to see available Polylith commands
+
+### Obsidian setup
+
+1. Install Obsidian
+2. Open Obsidian and open the vault in this repo `docs`
+3. Install the plugins recommenden community plugins:
+   `obsidian-excalidraw-plugin` and `todotxt-codeblocks`
+4. Restart Obsidian
 
 ## Dependencies
 
@@ -99,16 +109,16 @@ The Polylith architecture organizes code into:
 
 ## Development Workflow
 
-1. Add tasks with `t add <description> +<project> @<component>`. 
-  i.e. `t add "Implement login feature" +auth_server +auth`
+1. Add tasks with `t add <description> +<project> @<component>`.
+   i.e. `t add "Implement login feature" +auth_server +auth`
 2. Create components and bases using Polylith CLI
 3. Implement your functionality
 4. Create projects to package your code
 5. Run tests with `uv run pytest`
 6. Commit your changes with `git commit -m "feat(auth): implement login feature #1"`
-  a. To close a task, add `[do #1]` to your commit message
-  b. To close multiple tasks, add `[do #1 #2 #3]` to your commit message. 
-  i.e. `git commit -m "feat(auth): implement login feature [do #1 #2] #3"` will close tasks 1 and 2, and leave task 3 open.
+   a. To close a task, add `[do #1]` to your commit message
+   b. To close multiple tasks, add `[do #1 #2 #3]` to your commit message.
+   i.e. `git commit -m "feat(auth): implement login feature [do #1 #2] #3"` will close tasks 1 and 2, and leave task 3 open.
 
 ## Commit Conventions
 
