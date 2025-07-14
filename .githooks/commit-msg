@@ -62,6 +62,24 @@ echo "done."
 REF_TASKS=$(grep -oE "#[0-9]+" <<<"$COMMIT_MSG" | sort -u)
 REF_TASKS_ARRAY=($REF_TASKS)
 
+# check that referenced tasks exists in todo.txt by running t ls
+# example: 1 2025-07-14 prueba, so first field is the task number
+echo "--- todo list output ---"
+todo.sh -d "$CONFIG_FILE" ls
+echo "------------------------"
+for task in "${REF_TASKS_ARRAY[@]}"; do
+  task=$(echo "$task" | xargs)
+  task=${task//#/}
+  todo_output=$(todo.sh -d "$CONFIG_FILE" ls | sed 's/\x1b\[[0-9;]*m//g')
+
+  if ! echo "$todo_output" | grep -q "^$task"; then
+    echo -e "${RED}${BOLD}✖ Task $task not found in todo.txt${RESET}"
+    errors=$((errors + 1))
+  else
+    echo "✔ Task $task found!"
+  fi
+done
+
 # Check if tasks are referenced
 echo
 echo -e "${GREEN}${BOLD} === RUNNING TASK REFERENCE CHECK... === ${RESET}"
@@ -87,7 +105,7 @@ if [[ "$errors" -gt 0 ]]; then
 fi
 
 echo
-echo -e "${GREEN}${BOLD} === COMMIT MSG OK. CHECKING TASKS TO CLOSE IF ANY... === ${RESET}"
+echo -e "${GREEN}${BOLD} === COMMIT MSG OK. CHECKING TASKS TO CLOSE IF ANY...[do|done #n #n2] === ${RESET}"
 # Extract tasks explicitly within [do #n #n2] or [done #n #n2]
 DO_BLOCKS=$(grep -oP '\[(do|done)\s+#[0-9]+((\s+#[0-9]+)*)\]' <<<"$COMMIT_MSG")
 # check if do | done blocks are present
