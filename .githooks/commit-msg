@@ -62,17 +62,18 @@ echo "done."
 echo
 echo -e "${GREEN}${BOLD} === RUNNING TASK REFERENCE CHECK... === ${RESET}"
 # Extract referenced tasks
-REF_TASKS=$(grep -oE "#[0-9]+" <<<"$COMMIT_MSG" | sort -u)
+REF_TASKS=$(grep -oE "#[^]]+" <<<"$COMMIT_MSG" | sort -u)
 REF_TASKS_ARRAY=($REF_TASKS)
+
+echo -e "${BLUE}${BOLD}Checking referenced tasks: ${REF_TASKS_ARRAY[*]}${RESET}"
 
 # check that referenced tasks exists in todo.txt by running t ls
 # example: 1 2025-07-14 prueba, so first field is the task number
 for task in "${REF_TASKS_ARRAY[@]}"; do
   task=$(echo "$task" | xargs)
-  task=${task//#/}
-  todo_output=$(todo.sh -d "$CONFIG_FILE" ls | sed 's/\x1b\[[0-9;]*m//g')
-
-  if ! echo "$todo_output" | grep -q "^$task"; then
+  # search for "#[0-9a-fA-F]{6}" in todo-list output
+  todo_output=$(just todo-list | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+  if ! echo "$todo_output" | grep -wq "$task"; then
     echo -e "${RED}${BOLD}✖ Task $task not found in todo.txt${RESET}"
     errors=$((errors + 1))
   else
@@ -103,7 +104,7 @@ fi
 echo
 echo -e "${GREEN}${BOLD} === COMMIT MSG OK. CHECKING TASKS TO CLOSE IF ANY...[do|done #n #n2] === ${RESET}"
 # Extract tasks explicitly within [do #n #n2] or [done #n #n2]
-DO_BLOCKS=$(grep -oP '\[(do|done)\s+#[0-9]+((\s+#[0-9]+)*)\]' <<<"$COMMIT_MSG")
+DO_BLOCKS=$(grep -oP '\[(do|done)\s+#.+((\s+#.+)*)\]' <<<"$COMMIT_MSG")
 # check if do | done blocks are present
 if [[ -n "$DO_BLOCKS" ]]; then
   echo -e "${GREEN}${BOLD}✔ Found tasks to close: ${DO_BLOCKS[*]}${RESET}"
@@ -118,14 +119,14 @@ for block in $DO_BLOCKS; do
   TASKS=$(sed -E 's/^\[(do|done)\s+//; s/\]$//' <<<"$block")
   for task in $TASKS; do
     # remove do and []
-    TASK_NUM=$(sed 's/do//; s/\[//; s/\]//; s/#//; s/ //g' <<<"$task")
+    TASK_NUM=$(sed 's/do//; s/\[//; s/\]//; s/ //g' <<<"$task")
     DO_TASKS+=("$TASK_NUM")
   done
 done
 
 if [[ ${#DO_TASKS[@]} -gt 0 ]]; then
   echo -e "${GREEN}${BOLD}✔ Closing tasks: ${DO_TASKS[*]}${RESET}"
-  todo.sh -d "$CONFIG_FILE" do "${DO_TASKS[@]}" -a
+  just todo-done ${DO_TASKS[@]}
 fi
 
 exit 0
