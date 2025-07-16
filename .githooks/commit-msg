@@ -3,7 +3,7 @@
 # Skip hook for merge commits
 if [ -f "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
   echo "⚠️ Merge commit detected — skipping commit-msg checks"
-  exit 0  
+  exit 0
 fi
 
 COMMIT_MSG_FILE="$1"

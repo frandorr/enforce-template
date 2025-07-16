@@ -3,11 +3,13 @@
 # Your todo.txt directory (this should be an absolute path)
 #export TODO_DIR="/Users/gina/Documents/todo"
 export TODO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# get git user name
+export GIT_USER_NAME=$(git config user.name | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
 
 # Your todo/done/report.txt locations
-export TODO_FILE="$TODO_DIR/todo.txt"
-export DONE_FILE="$TODO_DIR/done.txt"
-export REPORT_FILE="$TODO_DIR/report.txt"
+export TODO_FILE="$TODO_DIR/$GIT_USER_NAME/todo.txt"
+export DONE_FILE="$TODO_DIR/$GIT_USER_NAME/done.txt"
+export REPORT_FILE="$TODO_DIR/$GIT_USER_NAME/report.txt"
 
 # You can customize your actions directory location
 export TODO_ACTIONS_DIR="$TODO_DIR/.todo.actions.d"
@@ -80,9 +82,9 @@ export COLOR_META=$CYAN
 # By default, additional information and confirmation of actions (like
 # "TODO: 1 added") are printed. You can suppress this via 0 or add extra
 # verbosity via 2.
-export TODOTXT_VERBOSE=1
-export TODOTXT_PRESERVE_LINE_NUMBERS=1
-export TODOTXT_DATE_ON_ADD=1
+export TODOTXT_VERBOSE=0
+export TODOTXT_PRESERVE_LINE_NUMBERS=0
+export TODOTXT_DATE_ON_ADD=0
 
 ## customize list output
 #
