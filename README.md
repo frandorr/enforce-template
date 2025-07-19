@@ -1,9 +1,19 @@
-# Python Polylith Template with uv
+# Python Polylith Template with uv, todo.txt and Obsidian
 
 A template repository for Python projects using the Polylith architecture with uv package manager that enforces practices and conventions.
 
+## Philosophy
+
+This repo **enforces decision-making**:
+
+- Every change starts with a task.
+- Every commit references a task.
+- Every task ends in a PR.
+- You control everything with `just`.
+
 # Index
 
+- [Simplest Usage](#simplest-usage)
 - [Features](#features)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -18,6 +28,20 @@ A template repository for Python projects using the Polylith architecture with u
 - [Development Workflow](#development-workflow)
 - [Commit Conventions](#commit-conventions)
 - [License](#license)
+
+## Simplest Usage
+
+```bash
+just todo-add "Implement login feature +auth_server @auth"
+# This creates a task with a reference, i.e. #112AFC and timestamp in todo.txt
+just poly-add component auth # create a component
+# implement your functionality...
+git commit -m "feat(auth): implement login feature #112AFC"
+# more functionalities...
+git commit -m "feat(auth): implement logout feature [do #112AFC]"
+# task is marked as done and available at done.txt
+just todo-list-done # list done tasks
+```
 
 ## Features
 
@@ -36,7 +60,6 @@ A template repository for Python projects using the Polylith architecture with u
 - [just](https://github.com/casey/just) for task automation
 - [todo.txt](https://github.com/todotxt/todo.txt-cli) (install with `just install-todotxt`)
 - [Obsidian](https://obsidian.md/) for knowledge management
-
 
 ### Setup
 
