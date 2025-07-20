@@ -23,14 +23,6 @@ BLUE='\033[1;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-echo "Running full pre-commit from commit-msg hook..."
-uv run pre-commit run --all-files
-STATUS=$?
-
-if [ "$STATUS" -ne 0 ]; then
-  echo "❌ pre-commit hook failed"
-  exit "$STATUS"
-fi
 # run togit-parser in files staged for commit:
 if command -v togit-parser >/dev/null 2>&1; then
   echo

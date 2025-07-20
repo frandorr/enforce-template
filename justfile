@@ -38,10 +38,21 @@ todo-config:
     echo "Run: source $FILE to activate the alias"
 
 git-config:
-    git config core.hooksPath .githooks
-    echo "Git is now using custom enforce hooks from .githooks/"
-    git config merge.union.driver true
-    echo "Git is now configured to use union merge driver for todo files"
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ ! -d .git/hooks ]; then
+        echo ".git/hooks directory does not exist. Please run this command in a git repository."
+        exit 1
+    fi
+    if [ ! -f .git/hooks/commit-msg ]; then
+        echo "Copying .githooks/commit-msg to .git/hooks/commit-msg"
+        cp .githooks/commit-msg .git/hooks/commit-msg
+        chmod +x .git/hooks/commit-msg
+        echo "Commit-msg hook installed successfully."
+    else
+        echo ".git/hooks/commit-msg already exists. Please remove it before running this command."
+        exit 1
+    fi
 
 # Add a task with timestamp
 todo-add TASK='':
