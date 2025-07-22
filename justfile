@@ -12,8 +12,19 @@ config:
     set -euo pipefail
     echo -e "{{ blue }}Setting up your environment...{{ reset }}"
     just --completions bash > ~/.just-completions.bash
+    JUST_COMPLETION_CMD="source ~/.just-completions.bash"
+    FILE="${ZSH_VERSION:+$HOME/.zshrc}"
+    FILE="${FILE:-$HOME/.bashrc}"
+
+    mkdir -p "$(dirname "$FILE")"
+    touch "$FILE"
+    if ! grep -qxF "$JUST_COMPLETION_CMD" "$FILE"; then
+        echo "$JUST_COMPLETION_CMD" >> "$FILE"
+        echo -e "{{ green }}Alias added to $FILE{{ reset }}"
+    else
+        echo -e "{{ yellow }}Alias already exists in $FILE{{ reset }}"
+    fi
     echo -e "{{ green }}Just completions generated at ~/.just-completions.bash{{ reset }}"
-    echo -e "{{ green }}source ~/.just-completions.bash{{ reset }}" >> ~/.bashrc
     # run git-config to set up git hooks
     echo -e "{{ blue }}Running git-config to set up git hooks...{{ reset }}"
     just git-config
