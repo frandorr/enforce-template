@@ -124,7 +124,13 @@ done
 
 if [[ ${#DO_TASKS[@]} -gt 0 ]]; then
   echo -e "${GREEN}${BOLD}✔ Closing tasks: ${DO_TASKS[*]}${RESET}"
-  just todo-done ${DO_TASKS[@]}
+  for task in "${DO_TASKS[@]}"; do
+    # check if task is empty
+    if [[ -z "$task" ]]; then
+      continue
+    fi
+    just todo-done "$task"
+  done
 fi
 
 exit 0
