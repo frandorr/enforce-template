@@ -1,70 +1,13 @@
-# Python Polylith Template with `uv`, `just`, `todo.txt`, and Obsidian
+# Python Polylith Template with `uv`
 
-A template repository for Python projects using the Polylith architecture, powered by the `uv` package manager, `just` task runner, `todo.txt` for task tracking, and Obsidian for knowledge management.
+A minimal template repository for Python projects using the [Polylith architecture](https://davidvujic.github.io/python-polylith-docs/setup/), powered by `uv` for lightning-fast dependency management, and `perk` for git hooks.
 
 ## Philosophy
 
-This repo **enforces decision-making**:
-
-* Every change starts with a task.
-* Every commit references a task.
-* Every task ends in a PR.
-* You control everything with `just`.
-
----
-
-# Index
-
-* [Simplest Usage](#simplest-usage)
-* [Features](#features)
-* [Getting Started](#getting-started)
-
-  * [Prerequisites](#prerequisites)
-  * [Setup](#setup)
-  * [Obsidian setup](#obsidian-setup)
-* [Dependencies](#dependencies)
-
-  * [Development Dependencies](#development-dependencies)
-  * [Recommended Additional Tools](#recommended-additional-tools)
-* [Pre-commit Hooks](#pre-commit-hooks)
-
-  * [Installing Pre-commit](#installing-pre-commit)
-* [Project Structure](#project-structure)
-* [Development Workflow](#development-workflow)
-* [Commit Conventions](#commit-conventions)
-* [License](#license)
-
----
-
-## Simplest Usage
-
-```bash
-just todo-add "Implement login feature +auth_server @auth"
-# ⤷ Adds a task with a timestamp and unique ID to todo.txt
-
-just poly-create component auth "Authentication module"
-# ⤷ Creates a new component named `auth`
-
-# Write your code, then commit with a reference to the task ID (e.g., #112AFC)
-git commit -m "feat(auth): implement login feature #112AFC"
-
-git commit -m "feat(auth): implement logout feature [do #112AFC]"
-# ⤷ Marks the task as done
-
-just todo-list-done
-# ⤷ Lists completed tasks
-```
-
----
-
-## Features
-
-* Modular architecture via [Polylith](https://polylith.gitbook.io/)
-* Fast, isolated dependency management with [`uv`](https://github.com/astral-sh/uv)
-* Automation of all setup and development tasks using [`just`](https://github.com/casey/just)
-* Personal task tracking with [`todo.txt`](https://github.com/todotxt/todo.txt-cli)
-* Built-in support for [Obsidian](https://obsidian.md) as a knowledge base
-* Git hook setup and commit enforcement via tasks
+This repository is designed to be a clean, modern starting point for teams looking to use:
+* **Polylith** for a modular, monorepo-friendly and maintainable architecture.
+* **uv** for exceptionally fast and reliable Python packaging and virtual environments.
+* **perk** for lightweight, tool-managed git hooks instead of traditional pre-commit.
 
 ---
 
@@ -72,178 +15,81 @@ just todo-list-done
 
 ### Prerequisites
 
-* [`uv`](https://github.com/astral-sh/uv)
-* [`just`](https://github.com/casey/just)
-* [`todo.txt-cli`](https://github.com/todotxt/todo.txt-cli) – install via `just todo-install`
-* [Obsidian](https://obsidian.md)
+To get started, you don't need anything pre-installed if you use the provided setup script. The setup script will automatically install `uv` (if not present) and `perk`. If you prefer to set things up manually, ensure you have `uv` installed.
 
----
+### Automatic Setup
 
-### Setup
+Run the setup script:
 
 ```bash
-just config
+./setup.sh
 ```
 
-This single command:
-
-* Sets up `just` completions
-* Installs `todo.txt-cli`
-* Configures `todo.txt` under your Git username
-* Installs the commit-msg git hook
-* Prompts for setting up the `t` alias for todo.txt
-
----
-
-Update project names manually:
-
-* In `workspace.toml`:
-
-  ```toml
-  [tool.polylith]
-  namespace = "your-project-name"
-  ```
-
-* In `pyproject.toml`:
-
-  ```toml
-  [project]
-  name = "your-project-name"
-  ```
-
----
-
-### Obsidian Setup
-
-1. Install Obsidian
-2. Open the vault in this repo: `docs`
-3. Install community plugins:
-
-   * `obsidian-excalidraw-plugin`
-   * `todotxt-codeblocks`
-4. Restart Obsidian
-
----
-
-## Dependencies
-
-### Development Dependencies
-
-Installed via `uv` and managed in `pyproject.toml`:
-
-* `pre-commit`
-* `polylith-cli`
-* `pytest`
-* `basedpyright`
-
-### Recommended Additional Tools
-
-* [`togit-parser`](https://github.com/franciscod/togit-parser): Analyze dependencies between functions to enforce modularity. Install via:
-
-```bash
-cargo install togit-parser
-```
-
----
-
-## Pre-commit Hooks
-
-Pre-configured in `.pre-commit-config.yaml`:
-
-* `ruff` – Linting and formatting
-* `basedpyright` – Type checking
-* `nbstripout` – Cleans notebook outputs
-* `pre-commit-hooks` – General purpose checks (e.g., trailing whitespace, YAML/JSON validity, etc.)
-
-### Installing Pre-commit
-
-```bash
-uv run pre-commit install
-```
+The script will automatically do the heavy lifting:
+1. Prompt you for a simple project name.
+2. Update the `name` in `pyproject.toml` and the `namespace` in `workspace.toml` automatically.
+3. Install `uv` (if it's not already installed on your system).
+4. Add `polylith-cli` as a development dependency and run `uv sync` to set up your virtual environment.
+5. Install `perk` globally via `uv tool install perk`.
 
 ---
 
 ## Project Structure
 
-Polylith organizes code into:
+Polylith organizes your codebase into interchangeable blocks, prioritizing composability:
 
-* `components/` – Reusable building blocks
-* `bases/` – Application entry points
-* `projects/` – Deployable targets
+* `components/` – Reusable functional blocks (the core logic). They are the lego bricks of your application.
+* `bases/` – Application entry points (e.g., an API router, a CLI task, or an AWS Lambda handler), acting as the outer shell exposing features.
+* `projects/` – Deployable artifacts that compose one or more bases and components. They do not contain logic directly, just assembling the pieces.
 
-Create bricks using:
+For more detailed information about Polylith and how its concepts apply in Python, check out the [official Python Polylith Documentation](https://davidvujic.github.io/python-polylith-docs/setup/).
+
+### Creating Blocks
+
+You can create components, bases, and projects effortlessly using the Polylith CLI (which is available via `uv run` once synced):
 
 ```bash
-just poly-create component my_component "My description"
-just poly-create base my_base "My base"
-just poly-create project my_project "My project"
+# Create a new component
+uv run poly create component --name my_component
+
+# Create a new base
+uv run poly create base --name my_base
+
+# Create a new project
+uv run poly create project --name my_project
+```
+
+### Inspecting the Workspace
+
+Polylith shines at giving you an overview of your monorepo. Check your projects, bases, and components with:
+
+```bash
+uv run poly info
 ```
 
 ---
 
 ## Development Workflow
 
-1. Add a task:
-
+1. **Install dependencies:**  
+   If you need to manually sync your environment or add third-party dependencies, use `uv`:
    ```bash
-   just todo-add "Implement login feature +auth_server @auth"
+   uv sync
+   uv add requests
+   uv add --group dev pytest
    ```
 
-2. Create a component or base:
-
-   ```bash
-   just poly-create component auth "Authentication logic"
-   ```
-
-3. Develop features, test with:
-
+2. **Run tests:**  
+   You can run your tests across the entire workspace easily using `pytest`. The template enables tests globally across components:
    ```bash
    uv run pytest
    ```
 
-4. Mark tasks as done:
-
-   ```bash
-   git commit -m "feat(auth): implement logout [do #112AFC]"
-   ```
-
-5. List tasks:
-
-   ```bash
-   just todo-list           # all tasks
-   just todo-list-project   # grouped by project
-   just todo-list-context   # grouped by context
-   just todo-list-done      # completed
-   ```
-
-6. Manually mark task as done:
-
-   ```bash
-   just todo-done TASK_ID='#112AFC'
-   ```
-
----
-
-## Commit Conventions
-
-We follow [Conventional Commits](https://www.conventionalcommits.org):
-
-Examples:
-
-```bash
-git commit -m "feat(auth): implement login [do #112AFC]"
-git commit -m "fix(api): correct error response handling #778FAD"
-```
-
-Merge policy:
-
-* Rebase main into your feature branch before merging
-* Use merge commits when merging to main
+3. **Hooks (perk):**  
+   We use `perk` for streamlined commit checks. The setup script installs it globally via `uv tool install perk`. You can use it to configure git workflows without heavy external dependencies.
 
 ---
 
 ## License
 
 MIT
-
----

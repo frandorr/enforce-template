@@ -43,10 +43,3 @@ venvPath = "."
 venv = ".venv"
 extraPaths = ["components/", "bases/"]
 
-[dependency-groups]
-dev = [
-    "pre-commit>=4.2.0,<5.0.0",
-    "polylith-cli>=1.30.1,<2.0.0",
-    "pytest>=8.4.1,<9.0.0",
-    "basedpyright>=1.30.0,<2.0.0",
-]
