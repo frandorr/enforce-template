@@ -44,9 +44,9 @@ uv add polylith-cli --dev
 echo "Syncing project dependencies with uv..."
 uv sync
 
-# Install perk using uv tool
-echo "Installing perk..."
-uv tool install perk
+# Install prek using uv tool
+echo "Installing prek..."
+uv tool install prek
 
 echo "--------------------------------------------------------"
 echo "Setup complete! You're ready to start building."
