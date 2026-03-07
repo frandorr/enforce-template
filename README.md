@@ -59,6 +59,38 @@ uv run poly create base --name my_base
 uv run poly create project --name my_project
 ```
 
+### Creating Plugins (aer)
+
+In `aer`, plugins typically consist of a component (for the logic) and a project (for packaging). You can use the Polylith CLI to create these.
+
+**Important Rules**:
+- **Prefix**: Plugin projects must use the `aer-` prefix (e.g., `aer-search-myprovider`) to be easily discoverable and identifiable within the ecosystem.
+- **Versioning**: Plugins should use [Semantic Versioning](https://semver.org/) (SemVer) for their releases.
+
+**Example: Creating a Search Plugin**
+```bash
+uv run poly create component --name search_myprovider
+uv run poly create project --name aer-search-myprovider
+```
+
+After implementing your logic (e.g., `search_myprovider(request: SearchRequest) -> SearchResult`), register the plugin in the project's `pyproject.toml` so `aer-core` can discover it:
+```toml
+[project.entry-points."aer.plugins"]
+myprovider = "aer.search_myprovider.core:search_myprovider"
+```
+
+**Example: Creating a Spectral Plugin**
+```bash
+uv run poly create component --name spectral_myinstrument
+uv run poly create project --name aer-spectral-myinstrument
+```
+
+Register the spectral plugin in its `pyproject.toml` similarly:
+```toml
+[project.entry-points."aer.plugins"]
+myinstrument = "aer.spectral_myinstrument.core:spectral_myinstrument"
+```
+
 ### Inspecting the Workspace
 
 Polylith shines at giving you an overview of your monorepo. Check your projects, bases, and components with:

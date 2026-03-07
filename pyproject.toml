@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 license = "MIT"
 authors = [{ name = "Your Name" }]
-dependencies = []
+dependencies = ["aer-core"]
 
 [tool.uv]
 managed = true
@@ -42,4 +42,3 @@ line-length = 120
 venvPath = "."
 venv = ".venv"
 extraPaths = ["components/", "bases/"]
-
