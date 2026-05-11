@@ -192,3 +192,5 @@ docs/.obsidian/plugins/
 docs/.obsidian/graph.json
 
 *.bak
+# AER public-release hygiene
+.venv/
