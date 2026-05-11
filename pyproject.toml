@@ -61,3 +61,8 @@ line-length = 120
 venvPath = "."
 venv = ".venv"
 extraPaths = ["components/", "bases/"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3,<10.0.0",
+]

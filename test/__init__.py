@@ -1,0 +1,1 @@
+# aer-plugin-template tests
