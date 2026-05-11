@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "A template code repo for aer plugins"
 readme = "README.md"
 requires-python = ">=3.13"
-license = "MIT"
+license = "Apache-2.0"
 authors = [{ name = "Fran Dorr" }]
 dependencies = ["aer-eo"]
 

@@ -126,4 +126,4 @@ The assistant will use the `new-release` skill to handle the versioning, tagging
 
 ## 📜 License
 
-This template is licensed under the [MIT License](LICENSE).
+This template is licensed under the [Apache License 2.0](LICENSE).
