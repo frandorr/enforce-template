@@ -25,6 +25,8 @@ This directory shows how to use the **aer plugin template** to scaffold a new pl
 3. **Implement your plugin logic** in the generated component:
    - For search plugins: override the `search()` method.
    - For extract plugins: override `prepare_for_extraction()`, `extract()`, and `extract_batches()`.
+  - `prepare_for_extraction()` receives a `GridConfig` object — read tiling parameters (cell size, margin, overlap) from it rather than hard-coding defaults.
+  - Domain config lives on `profile.extract_params`; the old `prepare_params` catch-all has been removed.
 
 4. **Run tests** to verify everything is wired correctly:
    ```bash

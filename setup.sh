@@ -132,6 +132,17 @@ cat <<EOF > "$CORE_PY"
 $IMPORT_STMT
 
 class $CLASS_NAME($BASE_CLASS, plugin_abstract=False):
+    """$BASE_CLASS plugin for $PROJECT_NAME.
+
+    Implementation notes:
+    - Grid configuration is passed via ``grid_config`` (GridConfig) to
+      ``prepare_for_extraction()``. Plugins should read cell size, margin,
+      and overlap from ``extraction_task.grid_config`` rather than defining
+      their own defaults.
+    - Domain-specific extraction parameters belong in
+      ``profile.extract_params``. The ambiguous ``prepare_params`` dict has
+      been removed.
+    """
     pass
 EOF
 

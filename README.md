@@ -64,7 +64,9 @@ The `setup.sh` wizard automatically creates the initial file structure in `compo
 ### 2. Implement Plugin Logic
 Open `components/aer/your_component/core.py`.
 - **For Search Providers**: Override the `search()` method to return a GeoDataFrame matching the `AssetSchema`.
-- **For Extractors**: Override `prepare_for_extraction()`, `extract()`, and potentially `extract_batches()` to handle processing workflows and return an `ArtifactSchema` GeoDataFrame. 
+- **For Extractors**: Override `prepare_for_extraction()`, `extract()`, and potentially `extract_batches()` to handle processing workflows and return an `ArtifactSchema` GeoDataFrame.
+  - `prepare_for_extraction()` receives a `GridConfig` object — read tiling parameters (cell size, margin, overlap) from it rather than hard-coding defaults.
+  - Domain config lives on `profile.extract_params`; the old `prepare_params` catch-all has been removed.
 *(Hint: Peek into the [Reference Plugins](#-reference-plugins) to see exact implementations!)*
 
 ### 3. Check Workspace Info
