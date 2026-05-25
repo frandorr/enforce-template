@@ -1,12 +1,12 @@
 # Examples — aer Plugin Template
 
-This directory shows how to use the **aer plugin template** to scaffold a new plugin.
+This directory shows how to use the **aereo plugin template** to scaffold a new plugin.
 
 ## Quick Start
 
 1. **Copy the template** to a new repository:
    ```bash
-   cp -r aer-plugin-template aer-my-new-plugin
+   cp -r aereo-plugin-template aer-my-new-plugin
    cd aer-my-new-plugin
    ```
 
@@ -37,8 +37,8 @@ This directory shows how to use the **aer plugin template** to scaffold a new pl
 
 For production-ready examples, see:
 
-- **Search plugin**: [aer-search-aws-goes](https://github.com/frandorr/aer-search-aws-goes)
-- **Extract plugin**: [aer-extract-aws-goes](https://github.com/frandorr/aer-extract-aws-goes)
+- **Search plugin**: [aereo-search-aws-goes](https://github.com/frandorr/aereo-search-aws-goes)
+- **Extract plugin**: [aereo-extract-aws-goes](https://github.com/frandorr/aereo-extract-aws-goes)
 
 ## Files
 

@@ -1,4 +1,4 @@
-"""Smoke tests for the aer-plugin-template repository."""
+"""Smoke tests for the aereo-plugin-template repository."""
 
 import subprocess
 import sys
@@ -34,7 +34,7 @@ def test_pyproject_has_required_fields():
         data = tomllib.load(f)
 
     project = data["project"]
-    assert project["name"] == "aer-plugin-template"
+    assert project["name"] == "aereo-plugin-template"
     assert project["license"] == "Apache-2.0"
     assert ">=3.12" in project["requires-python"]
     assert "keywords" in project

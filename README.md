@@ -1,6 +1,6 @@
 # 🚀 aer Plugin Template
 
-Welcome to the **aer plugin template**! This repository is your starting point for building high-performance, modular plugins for the `aer` ecosystem. 
+Welcome to the **aereo plugin template**! This repository is your starting point for building high-performance, modular plugins for the `aer` ecosystem. 
 
 Powered by the [Polylith architecture](https://davidvujic.github.io/python-polylith-docs/setup/) and `uv` for lightning-fast dependency management, this template ensures your plugin is scalable, maintainable, and ready for production.
 
@@ -22,7 +22,7 @@ The `setup.sh` script automates the tedious parts of starting a new Polylith plu
 1.  **Validation**: Ensures your project name follows the `aer-` prefix rule.
 2.  **Environment**: Installs `uv` (if missing) and sets up the workspace dependencies.
 3.  **Scaffolding**: Creates your first **Component** (for code) and **Project** (for packaging).
-4.  **Configuration**: Generates a pre-configured `pyproject.toml` with standard entry points so `aer-eo` can immediately find your plugin.
+4.  **Configuration**: Generates a pre-configured `pyproject.toml` with standard entry points so `aereo` can immediately find your plugin.
 5.  **Git Hooks**: Installs `prek` to ensure high-quality commits from day one.
 </details>
 
@@ -47,8 +47,8 @@ It allows you to share code between different projects within the same workspace
 ## 📖 Reference Plugins
 
 If you want to see how production-ready plugins look in the wild, use these implementations as guides:
-- **Search Plugin Example**: [aer-search-aws-goes](https://github.com/frandorr/aer-search-aws-goes)
-- **Extraction Plugin Example**: [aer-extract-aws-goes](https://github.com/frandorr/aer-extract-aws-goes)
+- **Search Plugin Example**: [aereo-search-aws-goes](https://github.com/frandorr/aereo-search-aws-goes)
+- **Extraction Plugin Example**: [aereo-extract-aws-goes](https://github.com/frandorr/aereo-extract-aws-goes)
 
 ---
 
@@ -57,12 +57,12 @@ If you want to see how production-ready plugins look in the wild, use these impl
 Once you've run the setup script, here is a step-by-step guide to building your new plugin:
 
 ### 1. Identify Your Scaffolding
-The `setup.sh` wizard automatically creates the initial file structure in `components/aer/your_component/`. Inside, you will find a `core.py` that inherits from the correct base class:
-- `SearchProvider` for projects starting with `aer-search-`.
-- `Extractor` for projects starting with `aer-extract-`.
+The `setup.sh` wizard automatically creates the initial file structure in `components/aereo/your_component/`. Inside, you will find a `core.py` that inherits from the correct base class:
+- `SearchProvider` for projects starting with `aereo-search-`.
+- `Extractor` for projects starting with `aereo-extract-`.
 
 ### 2. Implement Plugin Logic
-Open `components/aer/your_component/core.py`.
+Open `components/aereo/your_component/core.py`.
 - **For Search Providers**: Override the `search()` method to return a GeoDataFrame matching the `AssetSchema`.
 - **For Extractors**: Override `prepare_for_extraction()`, `extract()`, and potentially `extract_batches()` to handle processing workflows and return an `ArtifactSchema` GeoDataFrame.
   - `prepare_for_extraction()` receives a `GridConfig` object — read tiling parameters (cell size, margin, overlap) from it rather than hard-coding defaults.
@@ -83,7 +83,7 @@ uv add --group dev pytest  # Add development tools
 ```
 
 ### 5. Running Tests
-Tests are enabled globally. Write your tests inside `components/aer/your_component/test/` and run them with:
+Tests are enabled globally. Write your tests inside `components/aereo/your_component/test/` and run them with:
 ```bash
 uv run pytest
 ```
@@ -120,7 +120,7 @@ Releases are automated using [Conventional Commits](https://www.conventionalcomm
 
 ### 🤖 Agentic Workflow
 If you are working with **Antigravity** or another AI assistant, you can simply say:
-> "Release my plugin" or "Create a new release for aer-search-earthaccess"
+> "Release my plugin" or "Create a new release for aereo-search-earthaccess"
 
 The assistant will use the `new-release` skill to handle the versioning, tagging, and pushing for you.
 

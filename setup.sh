@@ -15,7 +15,7 @@ echo ""
 
 # 1- Project name should start with aer-
 echo -e "${BOLD}1. Project Configuration${NC}"
-read -p "Enter your project name (e.g., aer-search-earthaccess): " PROJECT_NAME
+read -p "Enter your project name (e.g., aereo-search-earthaccess): " PROJECT_NAME
 if [[ ! $PROJECT_NAME =~ ^aer- ]]; then
     echo -e "${RED}Error: Project name must start with 'aer-'${NC}"
     exit 1
@@ -80,13 +80,13 @@ echo -e "Customizing ${BLUE}$PROJECT_PYPROJECT${NC}..."
 CLASS_NAME=$(echo "$PLUGIN_PART" | awk -F'-' '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))} 1' OFS='')
 if [[ "$PLUGIN_PART" == search-* ]]; then
     BASE_CLASS="SearchProvider"
-    IMPORT_STMT="from aer.interfaces import SearchProvider"
+    IMPORT_STMT="from aereo.interfaces import SearchProvider"
 elif [[ "$PLUGIN_PART" == extract-* ]]; then
     BASE_CLASS="Extractor"
-    IMPORT_STMT="from aer.interfaces import Extractor"
+    IMPORT_STMT="from aereo.interfaces import Extractor"
 else
     BASE_CLASS="Plugin"
-    IMPORT_STMT="from aer.interfaces import Plugin"
+    IMPORT_STMT="from aereo.interfaces import Plugin"
 fi
 
 cat <<EOF > "$PROJECT_PYPROJECT"
@@ -104,7 +104,7 @@ authors = [{ name = "$AUTHOR_NAME" }]
 requires-python = ">=3.13"
 
 dependencies = [
-    "aer-eo",
+    "aereo",
 ]
 
 [project.urls]
@@ -112,8 +112,8 @@ Homepage = "https://github.com/$GITHUB_ORG/$PROJECT_NAME"
 Issues = "https://github.com/$GITHUB_ORG/$PROJECT_NAME/issues"
 Repository = "https://github.com/$GITHUB_ORG/$PROJECT_NAME"
 
-[project.entry-points."aer.plugins"]
-$COMPONENT_NAME = "aer.$COMPONENT_NAME.core:$CLASS_NAME"
+[project.entry-points."aereo.plugins"]
+$COMPONENT_NAME = "aereo.$COMPONENT_NAME.core:$CLASS_NAME"
 
 [tool.hatch]
 build.dev-mode-dirs = [ "../../components", "../../bases", "../../development", "." ]
@@ -121,11 +121,11 @@ build.hooks.polylith-bricks = {}
 build.targets.wheel.packages = ["aer"]
 
 [tool.polylith]
-bricks."../../components/aer/$COMPONENT_NAME" = "aer/$COMPONENT_NAME"
+bricks."../../components/aereo/$COMPONENT_NAME" = "aer/$COMPONENT_NAME"
 EOF
 
 # 6- Overwrite component files with new class-based structure
-CORE_PY="components/aer/$COMPONENT_NAME/core.py"
+CORE_PY="components/aereo/$COMPONENT_NAME/core.py"
 echo -e "Scaffolding ${BLUE}$CORE_PY${NC} class..."
 
 cat <<EOF > "$CORE_PY"
@@ -146,7 +146,7 @@ class $CLASS_NAME($BASE_CLASS, plugin_abstract=False):
     pass
 EOF
 
-INIT_PY="components/aer/$COMPONENT_NAME/__init__.py"
+INIT_PY="components/aereo/$COMPONENT_NAME/__init__.py"
 cat <<EOF > "$INIT_PY"
 from .core import $CLASS_NAME
 
@@ -161,11 +161,11 @@ uv tool install prek || true
 echo ""
 echo -e "${GREEN}${BOLD}========================================================${NC}"
 echo -e "${GREEN}${BOLD}Setup complete! Project $PROJECT_NAME is ready.      ${NC}"
-echo -e "Created component: ${BLUE}components/aer/$COMPONENT_NAME${NC}"
+echo -e "Created component: ${BLUE}components/aereo/$COMPONENT_NAME${NC}"
 echo -e "Created project:   ${BLUE}projects/$PROJECT_NAME${NC}"
 echo ""
 echo -e "Next steps:"
-echo -e "  1. Add your logic to ${BLUE}components/aer/$COMPONENT_NAME/core.py${NC}"
+echo -e "  1. Add your logic to ${BLUE}components/aereo/$COMPONENT_NAME/core.py${NC}"
 echo -e "  2. Run ${BLUE}uv run pytest${NC} to verify the setup"
 echo -e "  3. Use ${BLUE}uv run poly info${NC} to see your workspace"
 echo -e "${GREEN}${BOLD}========================================================${NC}"

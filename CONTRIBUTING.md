@@ -1,4 +1,4 @@
-# Contributing to aer-plugin-template
+# Contributing to aereo-plugin-template
 
 Thank you for your interest in contributing!
 
@@ -18,7 +18,7 @@ Please refer to the [AER core CONTRIBUTING.md](https://github.com/<org>/aer/blob
 This repository is a template for creating new AER plugins. To create a new plugin:
 
 1. Click **"Use this template"** on GitHub.
-2. Rename occurrences of `aer-plugin-template` to your plugin name.
+2. Rename occurrences of `aereo-plugin-template` to your plugin name.
 3. Update `pyproject.toml` metadata (name, description, keywords).
 4. Replace the example code in `components/` with your plugin logic.
 5. Add tests in `test/`.
@@ -26,8 +26,8 @@ This repository is a template for creating new AER plugins. To create a new plug
 ### Setup
 
 ```bash
-git clone https://github.com/<org>/aer-plugin-template.git
-cd aer-plugin-template
+git clone https://github.com/<org>/aereo-plugin-template.git
+cd aereo-plugin-template
 uv sync --all-extras
 ```
 
@@ -41,5 +41,5 @@ uv run ruff check .
 ### Plugin Structure
 
 - `components/aer_plugin_template/` — example plugin implementation
-- `projects/aer-plugin-template/` — publishable package metadata
+- `projects/aereo-plugin-template/` — publishable package metadata
 - `test/` — unit tests

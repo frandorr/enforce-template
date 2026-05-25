@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "aer-plugin-template"
+name = "aereo-plugin-template"
 version = "1.0.0"
-description = "A template code repo for aer plugins"
+description = "A template code repo for aereo plugins"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "Apache-2.0"
@@ -20,13 +20,13 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Atmospheric Science",
 ]
 authors = [{ name = "Fran Dorr" }]
-dependencies = ["aer-eo"]
+dependencies = ["aereo"]
 
 [project.urls]
-Homepage = "https://github.com/frandorr/aer-plugin-template"
-Repository = "https://github.com/frandorr/aer-plugin-template"
-Issues = "https://github.com/frandorr/aer-plugin-template/issues"
-Documentation = "https://frandorr.github.io/aer-plugin-template"
+Homepage = "https://github.com/frandorr/aereo-plugin-template"
+Repository = "https://github.com/frandorr/aereo-plugin-template"
+Issues = "https://github.com/frandorr/aereo-plugin-template/issues"
+Documentation = "https://frandorr.github.io/aereo-plugin-template"
 
 [tool.uv]
 managed = true
@@ -36,7 +36,7 @@ add-bounds = "major"
 members = ["projects/*"]
 
 [tool.uv.sources]
-aer-eo = { path = "../aer/projects/aer-core", editable = true }
+aereo = { path = "../aereo/projects/aereo", editable = true }
 
 [tool.hatch.metadata]
 allow-direct-references = true

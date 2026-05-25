@@ -1,1 +1,1 @@
-# aer-plugin-template tests
+# aereo-plugin-template tests
