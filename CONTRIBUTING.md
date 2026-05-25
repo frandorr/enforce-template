@@ -40,6 +40,6 @@ uv run ruff check .
 
 ### Plugin Structure
 
-- `components/aer_plugin_template/` — example plugin implementation
+- `components/aereo_plugin_template/` — example plugin implementation
 - `projects/aereo-plugin-template/` — publishable package metadata
 - `test/` — unit tests
