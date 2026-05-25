@@ -1,6 +1,6 @@
-# 🚀 aer Plugin Template
+# 🚀 aereo Plugin Template
 
-Welcome to the **aereo plugin template**! This repository is your starting point for building high-performance, modular plugins for the `aer` ecosystem. 
+Welcome to the **aereo plugin template**! This repository is your starting point for building high-performance, modular plugins for the `aereo` ecosystem. 
 
 Powered by the [Polylith architecture](https://davidvujic.github.io/python-polylith-docs/setup/) and `uv` for lightning-fast dependency management, this template ensures your plugin is scalable, maintainable, and ready for production.
 
@@ -19,7 +19,7 @@ chmod +x setup.sh
 <summary><b>🔍 What does the setup script do?</b></summary>
 
 The `setup.sh` script automates the tedious parts of starting a new Polylith plugin:
-1.  **Validation**: Ensures your project name follows the `aer-` prefix rule.
+1.  **Validation**: Ensures your project name follows the `aereo-` prefix rule.
 2.  **Environment**: Installs `uv` (if missing) and sets up the workspace dependencies.
 3.  **Scaffolding**: Creates your first **Component** (for code) and **Project** (for packaging).
 4.  **Configuration**: Generates a pre-configured `pyproject.toml` with standard entry points so `aereo` can immediately find your plugin.
@@ -27,7 +27,7 @@ The `setup.sh` script automates the tedious parts of starting a new Polylith plu
 </details>
 
 > [!IMPORTANT]
-> The setup script is mandatory for new project initialization. It ensures consistent naming conventions (`aer-` prefix) and registers your plugin entry points correctly.
+> The setup script is mandatory for new project initialization. It ensures consistent naming conventions (`aereo-` prefix) and registers your plugin entry points correctly.
 
 ---
 
@@ -67,7 +67,7 @@ Open `components/aereo/your_component/core.py`.
 - **For Extractors**: Override `prepare_for_extraction()`, `extract()`, and potentially `extract_batches()` to handle processing workflows and return an `ArtifactSchema` GeoDataFrame.
   - `prepare_for_extraction()` receives a `GridConfig` object — read tiling parameters (cell size, margin, overlap) from it rather than hard-coding defaults.
   - Domain config lives on `profile.extract_params`; the old `prepare_params` catch-all has been removed.
-*(Hint: Peek into the [Reference Plugins](#-reference-plugins) to see exact implementations!)*
+*(Hint: Peek into the [Reference Plugins](#reference-plugins) to see exact implementations!)*
 
 ### 3. Check Workspace Info
 See the state of your workspace, which components are used by which projects:
@@ -99,7 +99,7 @@ If your plugin grows and you need to split logic into more components, you can u
 uv run poly create component --name my_new_feature
 
 # Create a new project (if you want to ship a separate package)
-uv run poly create project --name aer-my-other-package
+uv run poly create project --name aereo-my-other-package
 ```
 
 ---
@@ -112,7 +112,7 @@ Releases are automated using [Conventional Commits](https://www.conventionalcomm
 2.  **Run the release script**:
     ```bash
     # Release a specific project
-    python3 .agents/scripts/release.py aer-my-plugin
+    python3 .agents/scripts/release.py aereo-my-plugin
 
     # Release all changed projects
     python3 .agents/scripts/release.py --changed
