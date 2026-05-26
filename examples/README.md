@@ -6,8 +6,8 @@ This directory shows how to use the **aereo plugin template** to scaffold a new 
 
 1. **Copy the template** to a new repository:
    ```bash
-   cp -r aereo-plugin-template aer-my-new-plugin
-   cd aer-my-new-plugin
+   cp -r aereo-plugin-template aereo-my-new-plugin
+   cd aereo-my-new-plugin
    ```
 
 2. **Run the setup script** to bootstrap your plugin:
@@ -17,14 +17,14 @@ This directory shows how to use the **aereo plugin template** to scaffold a new 
    ```
 
    The setup script will:
-   - Validate your project name follows the `aer-` prefix rule.
+   - Validate your project name follows the `aereo-` prefix rule.
    - Install `uv` (if missing) and set up workspace dependencies.
    - Create your first **Component** (logic) and **Project** (packaging).
    - Generate a pre-configured `pyproject.toml` with standard entry points.
 
 3. **Implement your plugin logic** in the generated component:
    - For search plugins: override the `search()` method.
-   - For extract plugins: override `prepare_for_extraction()`, `extract()`, and `extract_batches()`.
+   - For extract plugins: override `prepare_for_extraction()` and `extract()`.
   - `prepare_for_extraction()` receives a `GridConfig` object — read tiling parameters (cell size, margin, overlap) from it rather than hard-coding defaults.
   - Domain config lives on `profile.extract_params`; the old `prepare_params` catch-all has been removed.
 
