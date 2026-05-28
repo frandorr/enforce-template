@@ -52,7 +52,7 @@ def test_workspace_toml_has_polylith_config():
     with workspace_path.open("rb") as f:
         data = tomllib.load(f)
 
-    assert data["tool"]["polylith"]["namespace"] == "aer"
+    assert data["tool"]["polylith"]["namespace"] == "aereo"
     assert data["tool"]["polylith"]["structure"]["theme"] == "loose"
     assert data["tool"]["polylith"]["test"]["enabled"] is True
 

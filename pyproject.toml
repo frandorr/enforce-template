@@ -9,7 +9,7 @@ description = "A template code repo for aereo plugins"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "Apache-2.0"
-keywords = ["satellite", "remote-sensing", "earth-observation", "aer", "plugin"]
+keywords = ["satellite", "remote-sensing", "earth-observation", "aereo", "plugin"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
@@ -30,7 +30,6 @@ Documentation = "https://frandorr.github.io/aereo-plugin-template"
 
 [tool.uv]
 managed = true
-add-bounds = "major"
 
 [tool.uv.workspace]
 members = ["projects/*"]

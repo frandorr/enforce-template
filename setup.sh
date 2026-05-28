@@ -9,15 +9,15 @@ NC='\033[0m' # No Color
 BOLD='\033[1m'
 
 echo -e "${BLUE}${BOLD}========================================================${NC}"
-echo -e "${BLUE}${BOLD}      Welcome to the aer-plugin setup wizard!           ${NC}"
+echo -e "${BLUE}${BOLD}      Welcome to the aereo-plugin setup wizard!           ${NC}"
 echo -e "${BLUE}${BOLD}========================================================${NC}"
 echo ""
 
-# 1- Project name should start with aer-
+# 1- Project name should start with aereo-
 echo -e "${BOLD}1. Project Configuration${NC}"
 read -p "Enter your project name (e.g., aereo-search-earthaccess): " PROJECT_NAME
-if [[ ! $PROJECT_NAME =~ ^aer- ]]; then
-    echo -e "${RED}Error: Project name must start with 'aer-'${NC}"
+if [[ ! $PROJECT_NAME =~ ^aereo- ]]; then
+    echo -e "${RED}Error: Project name must start with 'aereo-'${NC}"
     exit 1
 fi
 
@@ -37,7 +37,7 @@ echo ""
 echo -e "${GREEN}🚀 Setting up project: $PROJECT_NAME...${NC}"
 
 # Basic variables
-PLUGIN_PART=${PROJECT_NAME/aer-/}
+PLUGIN_PART=${PROJECT_NAME/aereo-/}
 COMPONENT_NAME=$(echo "$PLUGIN_PART" | tr '-' '_')
 
 # Update root pyproject.toml name
@@ -101,7 +101,7 @@ description = "Polylith project for the $PLUGIN_PART plugin"
 readme = "README.md"
 authors = [{ name = "$AUTHOR_NAME" }]
 
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 
 dependencies = [
     "aereo",
@@ -118,10 +118,10 @@ $COMPONENT_NAME = "aereo.$COMPONENT_NAME.core:$CLASS_NAME"
 [tool.hatch]
 build.dev-mode-dirs = [ "../../components", "../../bases", "../../development", "." ]
 build.hooks.polylith-bricks = {}
-build.targets.wheel.packages = ["aer"]
+build.targets.wheel.packages = ["aereo"]
 
 [tool.polylith]
-bricks."../../components/aereo/$COMPONENT_NAME" = "aer/$COMPONENT_NAME"
+bricks."../../components/aereo/$COMPONENT_NAME" = "aereo/$COMPONENT_NAME"
 EOF
 
 # 6- Overwrite component files with new class-based structure
